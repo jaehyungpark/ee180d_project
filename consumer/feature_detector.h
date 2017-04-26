@@ -42,10 +42,10 @@ Feature* extract_feature(double* data, double* time, int* S_i, int n_S,
 	int feature_case);
 
 void global_feature(double* accel_y, double* gyro_y,
-	double* time, int* S_i, int n_S, char* ofile_feature_name);
+	double* time, int* S_i, int n_S, const char* ofile_feature_name);
 
 void walk_feature(double* accel_x,
-	double* time, int* S_i, int n_S, char* ofile_walk_feature_name);
+	double* time, int* S_i, int n_S, const char* ofile_walk_feature_name);
 
 /*
 void turn_feature(double* accel_y, double* gyro_y,

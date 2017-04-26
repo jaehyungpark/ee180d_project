@@ -1,7 +1,7 @@
 #include "exe_neural_network.h"
 #include "feature_detector.h"
 
-int exe_global_neural_network(char *global_feature_file)
+int exe_global_neural_network(const char *global_feature_file)
 {
     int i;
     int location;
@@ -13,7 +13,7 @@ int exe_global_neural_network(char *global_feature_file)
 
     FILE *fp;
     fp = fopen(global_feature_file, "r+");
-    int answer[5] = {-1,-1,-1,-1,-1};
+    //int answer[5] = {-1,-1,-1,-1,-1};
     int numLines = 0;
     int inN = 0;
     int outN = 0;
@@ -21,7 +21,7 @@ int exe_global_neural_network(char *global_feature_file)
     size_t len = 0;
     ssize_t read;
     int rv;
-    char* str_answer;
+    //char* str_answer;
     
     ann = fann_create_from_file("GLOBAL.net");
 
@@ -58,34 +58,33 @@ int exe_global_neural_network(char *global_feature_file)
         }
 
         switch(location) {
-            case TURN:
+            case TURN_CASE:
                 printf("Got Input values -> Movement type is %s\n", "Turning");
                 sleep(1);
                 //extract sub_feature
                 //exe_Sub_network
                 break;
-            case WALK:
+            case WALK_CASE:
                 printf("Got Input values -> Movement type is %s\n", "Walking");
                 sleep(1);
                 //extract sub_feature
-                walk_feature(double* accel_x, double* time, 
-                    int* S_i, int n_S, "walk_features.csv");
+                //walk_feature(accel_x, time, S_i, n_S, "walk_feature.csv");
 
                 //exe_Sub_network
                 break;
-            case STAIR:
+            case STAIR_CASE:
                 printf("Got Input values -> Movement type is %s\n", "Stairs");
                 sleep(1);
                 //extract sub_feature
                 //exe_Sub_network
                 break;
-            case JUMP:
+            case JUMP_CASE:
                 printf("Got Input values -> Movement type is %s\n", "Jumping");
                 sleep(1);
                 //extract sub_feature
                 //exe_Sub_network
                 break;
-            case RUN:
+            case RUN_CASE:
                 printf("Got Input values -> Movement type is %s\n", "Running");
                 sleep(1);
                 //extract sub_feature
@@ -99,7 +98,7 @@ int exe_global_neural_network(char *global_feature_file)
     return 0;
 }
 
-int exe_walk_neural_network(char *walk_feature_file)
+int exe_walk_neural_network(const char *walk_feature_file)
 {
     int i;
     int location;
@@ -111,7 +110,7 @@ int exe_walk_neural_network(char *walk_feature_file)
 
     FILE *fp;
     fp = fopen(walk_feature_file, "r+");
-    int answer[3] = {-1,-1,-1};
+    //int answer[3] = {-1,-1,-1};
     int numLines = 0;
     int inN = 0;
     int outN = 0;
@@ -119,7 +118,7 @@ int exe_walk_neural_network(char *walk_feature_file)
     size_t len = 0;
     ssize_t read;
     int rv;
-    char* str_answer;
+    //char* str_answer;
     
     ann = fann_create_from_file("WALK.net");
 

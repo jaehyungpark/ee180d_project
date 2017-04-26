@@ -4,6 +4,7 @@
 #include <string.h>
 /* for exit() */
 #include <stdlib.h>
+#include <sys/file.h>
 
 #include "feature_detector.h"
 #include "stride_detector.h"
@@ -22,11 +23,7 @@ int count_samples(FILE *fp) {
 	int N_SAMPLES = 0;
 
 	if (fp == NULL) {
-		fprintf(stderr, 
-				"Failed to read from file \'%s\'.\n", 
-				ifile_name
-		       );
-		sleep(15);
+		sleep(1);
 		exit(EXIT_FAILURE);
 	}
 	/* count the number of lines in the file */
@@ -38,42 +35,6 @@ int count_samples(FILE *fp) {
 	/* go back to the start of the file so that the data can be read */
 	rewind(fp);
 	return N_SAMPLES;
-}
-
-int collect_raw_data(FILE *fp, double &time,
-					double* accel_x,
-					double* accel_y,
-					double* accel_z,
-					double* gyro_x,
-					double* gyro_y,
-					double* gyro_z,
-					double* t1, 
-					double* t2,
-					double* start_time) {
-	char * line = NULL;
-	size_t len = 0;
-	ssize_t read;
-
-	read = getline(&line, &len, fp); //discard header of file
-	while ((read = getline(&line, &len, fp)) != -1) {
-		/* parse the data */
-		rv = sscanf(line, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n", &t1, &t2, &accel_x[i], &accel_y[i], &accel_z[i], &gyro_x[i], &gyro_y[i], &gyro_z[i]);
-		if (rv != 8) {
-			fprintf(stderr,
-					"%s %d \'%s\'. %s.\n",
-					"Failed to read line",
-					i,
-					line,
-					"Exiting"
-			       );
-			exit(EXIT_FAILURE);
-		}
-		if(i == 0)
-			start_time = t1;
-
-		time[i] = (t1 + t2)/2.0 - start_time;
-		i++;
-	}
 }
 
 
@@ -143,8 +104,26 @@ int process_file(const char *fname, float pk_threshold, const char *ofile_featur
 	
 	// Collect raw data
 	printf("\tAcquired lock. Printing file contents of \'%s\':\n", fname);
-	collect_raw_data(fp,time,accel_x,accel_y,accel_z,gyro_x,gyro_y,
-		gyro_z,t1,t2,start_time);
+	read = getline(&line, &len, fp); //discard header of file
+	while ((read = getline(&line, &len, fp)) != -1) {
+		/* parse the data */
+		rv = sscanf(line, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n", &t1, &t2, &accel_x[i], &accel_y[i], &accel_z[i], &gyro_x[i], &gyro_y[i], &gyro_z[i]);
+		if (rv != 8) {
+			fprintf(stderr,
+					"%s %d \'%s\'. %s.\n",
+					"Failed to read line",
+					i,
+					line,
+					"Exiting"
+			       );
+			exit(EXIT_FAILURE);
+		}
+		if(i == 0)
+			start_time = t1;
+
+		time[i] = (t1 + t2)/2.0 - start_time;
+		i++;
+	}
 
 	//Find peak and trough
 	rv = find_peaks_and_troughs(
@@ -200,11 +179,10 @@ int main(int argc, char **argv)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
-	int fd;
 	char * fname;
-	char *ofile_feature_name
-
+	char *ofile_feature_name;
 	float pk_threshold;
+
 	pk_threshold = atof(argv[1]);
 	ofile_feature_name = argv[2];
 
@@ -223,7 +201,7 @@ int main(int argc, char **argv)
 			fname[strlen(line)-1] = 0;
 			// process file with fname
 			printf("Processing file \'%s\'", fname);
-			process_file(fname,pk_threshold);
+			process_file(fname,pk_threshold,ofile_feature_name);
 
 			sleep(1);
 		}

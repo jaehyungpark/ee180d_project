@@ -33,14 +33,14 @@ Feature* extract_feature(double* data, double* time, int* S_i, int n_S,
 				//Add seg max/min + period to array
 				break;
 			case WALK:
-				mean(data, pos0, pos1, &features[i].seg0_mean);
-				mean(data, pos1, pos2, &features[i].seg1_mean);
-				mean(data, pos2, pos3, &features[i].seg2_mean);
-				mean(data, pos3, pos4, &features[i].seg3_mean);
-				variance(data, pos0, pos1, &features[i].seg0_var);
-				variance(data, pos1, pos2, &features[i].seg1_var);
-				variance(data, pos2, pos3, &features[i].seg2_var);
-				variance(data, pos3, pos4, &features[i].seg3_var);
+				mean(data, pos0, pos1, &features[i].seg0.mean);
+				mean(data, pos1, pos2, &features[i].seg1.mean);
+				mean(data, pos2, pos3, &features[i].seg2.mean);
+				mean(data, pos3, pos4, &features[i].seg3.mean);
+				variance(data, pos0, pos1, &features[i].seg0.var);
+				variance(data, pos1, pos2, &features[i].seg1.var);
+				variance(data, pos2, pos3, &features[i].seg2.var);
+				variance(data, pos3, pos4, &features[i].seg3.var);
 				break;
 		}
 		
@@ -52,7 +52,7 @@ Feature* extract_feature(double* data, double* time, int* S_i, int n_S,
 
 
 void global_feature(double* accel_y, double* gyro_y,
-	double* time, int* S_i, int n_S, char* ofile_feature_name)
+	double* time, int* S_i, int n_S, const char* ofile_feature_name)
 {
 	/* Generic variables */
 	int i;
@@ -72,8 +72,8 @@ void global_feature(double* accel_y, double* gyro_y,
 	}
 
 	//2 indices divided by 4 
-	features1 = extract_feature(gyro_y, time, S_i, n_S);
-	features0 = extract_feature(accel_y, time, S_i, n_S);
+	features1 = extract_feature(gyro_y,time,S_i,n_S,GLOBAL);
+	features0 = extract_feature(accel_y,time,S_i,n_S,GLOBAL);
 
 	printf("Attempting to write to file \'%s\'.\n", ofile_feature_name);
 	fp = fopen(ofile_feature_name, "w");
@@ -102,7 +102,7 @@ void global_feature(double* accel_y, double* gyro_y,
 }
 
 void walk_feature(double* accel_x,
-	double* time, int* S_i, int n_S, char* ofile_walk_feature_name)
+	double* time, int* S_i, int n_S, const char* ofile_walk_feature_name)
 {
 	/* Generic variables */
 	int i;
@@ -121,14 +121,14 @@ void walk_feature(double* accel_x,
 	}
 
 	//2 indices divided by 4 
-	features0 = extract_feature(accel_x, time, S_i, n_S);
+	features0 = extract_feature(accel_x,time,S_i,n_S,WALK);
 
-	printf("Attempting to write to file \'%s\'.\n", ofile_feature_name);
-	fp = fopen(ofile_feature_name, "w");
+	printf("Attempting to write to file \'%s\'.\n", ofile_walk_feature_name);
+	fp = fopen(ofile_walk_feature_name, "w");
 	if (fp == NULL) {
 		fprintf(stderr, 
 				"Failed to write to file \'%s\'.\n", 
-				ofile_feature_name
+				ofile_walk_feature_name
 		       );
 		exit(EXIT_FAILURE); 
 	}

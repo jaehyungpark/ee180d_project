@@ -2,10 +2,15 @@
 #include <mraa/i2c.h>
 #include "LSM9DS0.h"
 #include <math.h>
-#include <sys/time.h>
+
 #include <time.h>
+#include <sys/time.h>
 #include <unistd.h>
 #include <signal.h>
+#include <sys/file.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define MILLION 1000000.0
 
 sig_atomic_t volatile run_flag = 1;
@@ -29,9 +34,9 @@ void collect_data() {
 	char* file_name;
 	FILE *fp;
 
-	fname = malloc(sizeof(char) * 1024);
-	memset(fname, 0, 1024);
-	sprintf(fname, "file_%ld.csv", time(NULL));
+	file_name = malloc(sizeof(char) * 1024);
+	memset(file_name, 0, 1024);
+	sprintf(file_name, "file_%ld.csv", time(NULL));
 
 	//timer variable
 	int sec = 0, trigger = 10; 
@@ -59,7 +64,7 @@ void collect_data() {
 	//Lock the file
 	fd = fileno(fp);
 	flock(fd, LOCK_EX);
-	clock_t start = clock();
+	clock_t start_pt = clock();
 	fprintf(fp, "timestamp_before, timestamp_after, accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z\n");
 	do {
 		gettimeofday(&start, NULL);
@@ -72,12 +77,12 @@ void collect_data() {
 		fprintf(fp, "%f, %f, %+f, %+f, %+f, %+f, %+f, %+f\n", start_epoch, end_epoch, ad.x, ad.y, ad.z, gd.x, gd.y, gd.z);
 		usleep(100);
 		//Check timer
-		clock_t diff = clock() - start;
+		clock_t diff = clock() - start_pt;
 		sec = diff / CLOCKS_PER_SEC;
 	} while (sec < trigger);
 
 	//Clean up memory
-	free(fname);
+	free(file_name);
 	fclose(fp);
 }
 
