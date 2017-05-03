@@ -8,12 +8,16 @@
 #include <stdlib.h>
 #include "math_func.h"
 
+#define GLOBAL 0
+#define WALK 1
+
 typedef struct{
 	double max;
 	double min;
 	double mean;
 	double var;
 	double rms;
+	double std;
 	double mad;
 
 } Seg_feature;
@@ -31,10 +35,13 @@ typedef struct{
 	double abs_integral;
 } Feature;
 
-Feature* extract_feature(double* data, double* time, int* S_i, int n_S);
+Feature* extract_feature(double* data, double* time, int* S_i, int n_S, int feature_case);
 
 void global_feature(double* accel_y, double* gyro_y,
-	double* time, int* S_i, int n_S, char* ofile_maxmin_name, char* ofile_feature_name);
+	double* time, int* S_i, int n_S, char* ofile_feature_name);
+
+void walk_feature(double* accel_x,
+	double* time, int* S_i, int n_S, char* ofile_walk_feature_name);
 
 
 #endif

@@ -1,0 +1,186 @@
+Stride detection and feature selection on walking data files...
+Arguments used:
+	ifile_name=new_data/walk_slow.csv
+	ofile_peak_trough_name=new_data_results/walk_slow_pt.csv
+	ofile_stride_name=new_data_results/walk_slow_st.csv
+	peak_threshold=50.000000
+Attempting to read from file 'new_data/walk_slow.csv'.
+Attempting to filter troughs.
+Attempting to write to file 'new_data_results/walk_slow_feature.csv'.
+Attempting to write to file 'new_data_results/walk_slow_pt.csv'.
+Attempting to write to file 'new_data_results/walk_slow_st.csv'.
+stride_detector completed successfuly. Exiting.
+Arguments used:
+	ifile_name=new_data/walk_med.csv
+	ofile_peak_trough_name=new_data_results/walk_med_pt.csv
+	ofile_stride_name=new_data_results/walk_med_st.csv
+	peak_threshold=50.000000
+Attempting to read from file 'new_data/walk_med.csv'.
+Attempting to filter troughs.
+Attempting to write to file 'new_data_results/walk_med_feature.csv'.
+Attempting to write to file 'new_data_results/walk_med_pt.csv'.
+Attempting to write to file 'new_data_results/walk_med_st.csv'.
+stride_detector completed successfuly. Exiting.
+Arguments used:
+	ifile_name=new_data/walk_fast.csv
+	ofile_peak_trough_name=new_data_results/walk_fast_pt.csv
+	ofile_stride_name=new_data_results/walk_fast_st.csv
+	peak_threshold=50.000000
+Attempting to read from file 'new_data/walk_fast.csv'.
+Attempting to filter troughs.
+Attempting to write to file 'new_data_results/walk_fast_feature.csv'.
+Attempting to write to file 'new_data_results/walk_fast_pt.csv'.
+Attempting to write to file 'new_data_results/walk_fast_st.csv'.
+stride_detector completed successfuly. Exiting.
+
+Stride detection and feature selection on walking data files...
+Arguments used:
+	ifile_name=new_data/test_walk_slow.csv
+	ofile_peak_trough_name=new_data_results/test_walk_slow_pt.csv
+	ofile_stride_name=new_data_results/test_walk_slow_st.csv
+	peak_threshold=50.000000
+Attempting to read from file 'new_data/test_walk_slow.csv'.
+Attempting to filter troughs.
+Attempting to write to file 'new_data_results/test_walk_slow_feature.csv'.
+Attempting to write to file 'new_data_results/test_walk_slow_pt.csv'.
+Attempting to write to file 'new_data_results/test_walk_slow_st.csv'.
+stride_detector completed successfuly. Exiting.
+Arguments used:
+	ifile_name=new_data/test_walk_med.csv
+	ofile_peak_trough_name=new_data_results/test_walk_med_pt.csv
+	ofile_stride_name=new_data_results/test_walk_med_st.csv
+	peak_threshold=50.000000
+Attempting to read from file 'new_data/test_walk_med.csv'.
+Attempting to filter troughs.
+Attempting to write to file 'new_data_results/test_walk_med_feature.csv'.
+Attempting to write to file 'new_data_results/test_walk_med_pt.csv'.
+Attempting to write to file 'new_data_results/test_walk_med_st.csv'.
+stride_detector completed successfuly. Exiting.
+Arguments used:
+	ifile_name=new_data/test_walk_fast.csv
+	ofile_peak_trough_name=new_data_results/test_walk_fast_pt.csv
+	ofile_stride_name=new_data_results/test_walk_fast_st.csv
+	peak_threshold=50.000000
+Attempting to read from file 'new_data/test_walk_fast.csv'.
+Attempting to filter troughs.
+Attempting to write to file 'new_data_results/test_walk_fast_feature.csv'.
+Attempting to write to file 'new_data_results/test_walk_fast_pt.csv'.
+Attempting to write to file 'new_data_results/test_walk_fast_st.csv'.
+stride_detector completed successfuly. Exiting.
+
+
+Generate train files...
+Open new_data_results/walk_slow_feature.csv...
+Close new_data_results/walk_slow_feature.csv...
+Open new_data_results/walk_med_feature.csv...
+Close new_data_results/walk_med_feature.csv...
+Open new_data_results/walk_fast_feature.csv...
+Close new_data_results/walk_fast_feature.csv...
+Open new_data_results/walk_slow_feature.csv...
+Read data from  new_data_results/walk_slow_feature.csv...
+Close new_data_results/walk_slow_feature.csv...
+Open new_data_results/walk_med_feature.csv...
+Read data from  new_data_results/walk_med_feature.csv...
+Close new_data_results/walk_med_feature.csv...
+Open new_data_results/walk_fast_feature.csv...
+Read data from  new_data_results/walk_fast_feature.csv...
+Close new_data_results/walk_fast_feature.csv...
+Start to normalize data...
+Period Nomalization!!!!!!!3.272060
+Stop normalizing data...
+Open new_data_results/train.txt...
+Write to new_data_results/train.txt...
+Close new_data_results/train.txt...
+
+Generate test files...
+Open new_data_results/test_walk_slow_feature.csv...
+Close new_data_results/test_walk_slow_feature.csv...
+Open new_data_results/test_walk_med_feature.csv...
+Close new_data_results/test_walk_med_feature.csv...
+Open new_data_results/test_walk_fast_feature.csv...
+Close new_data_results/test_walk_fast_feature.csv...
+Open new_data_results/test_walk_slow_feature.csv...
+Read data from  new_data_results/test_walk_slow_feature.csv...
+Close new_data_results/test_walk_slow_feature.csv...
+Open new_data_results/test_walk_med_feature.csv...
+Read data from  new_data_results/test_walk_med_feature.csv...
+Close new_data_results/test_walk_med_feature.csv...
+Open new_data_results/test_walk_fast_feature.csv...
+Read data from  new_data_results/test_walk_fast_feature.csv...
+Close new_data_results/test_walk_fast_feature.csv...
+Start to normalize data...
+Period Nomalization!!!!!!!3.562208
+Stop normalizing data...
+Open new_data_results/test.txt...
+Write to new_data_results/test.txt...
+Close new_data_results/test.txt...
+
+Train neural network...
+Max epochs    10000. Desired error: 0.0001000000.
+Epochs            1. Current error: 0.2460624874. Bit fail 165.
+Epochs          100. Current error: 0.0265956819. Bit fail 9.
+Epochs          200. Current error: 0.0221304838. Bit fail 7.
+Epochs          300. Current error: 0.0184302963. Bit fail 6.
+Epochs          400. Current error: 0.0162117779. Bit fail 2.
+Epochs          500. Current error: 0.0057495753. Bit fail 1.
+Epochs          600. Current error: 0.0148343910. Bit fail 2.
+Epochs          700. Current error: 0.0075003561. Bit fail 1.
+Epochs          800. Current error: 0.0006678939. Bit fail 0.
+Epochs          900. Current error: 0.0027223611. Bit fail 1.
+Epochs         1000. Current error: 0.0001432386. Bit fail 0.
+Epochs         1042. Current error: 0.0000984228. Bit fail 0.
+
+Test neural network...
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 1
+Input values got-> Movement type is 0
+Input values got-> Movement type is 0
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 1
+Input values got-> Movement type is 0
+Input values got-> Movement type is 1
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+Input values got-> Movement type is 2
+18	0	0	
+3	15	0	
+0	1	13	

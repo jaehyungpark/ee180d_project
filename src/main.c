@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	/*output file names*/
 	char* ofile_pt_name; // peak&trough file
 	char* ofile_st_name; // stride detection file
-	char* ofile_maxmin_name; // feature maxmin file(t, max, t, min)
+	//char* ofile_maxmin_name; // feature maxmin file(t, max, t, min)
 	char* ofile_feature_name; // feature file(max min period)
 
 	
@@ -74,8 +74,8 @@ int main(int argc, char **argv)
 	 * 				<output feature file> <threshold_value_float> <time constraint>
 	 * 
 	 */
-	if (argc != 7) {
-		fprintf(stderr, "USEAGE: ./main <input data file> <output peak trough detection file> <output stride detection file> <output maxmin file> <output feature file> <threshold>\n");
+	if (argc != 6) {
+		fprintf(stderr, "USEAGE: ./main <input data file> <output peak trough detection file> <output stride detection file> <output feature file> <threshold>\n");
 		exit(EXIT_FAILURE);
 
 	} else {
@@ -83,10 +83,10 @@ int main(int argc, char **argv)
 		ofile_pt_name = argv[2];
 		ofile_st_name = argv[3];
 		
-		ofile_maxmin_name = argv[4];
-		ofile_feature_name = argv[5];
+		//ofile_maxmin_name = argv[4];
+		ofile_feature_name = argv[4];
 
-		pk_threshold = atof(argv[6]);
+		pk_threshold = atof(argv[5]);
 	}
 
 	printf("Arguments used:\n\t%s=%s\n\t%s=%s\n\t%s=%s\n\t%s=%f\n",
@@ -192,8 +192,8 @@ int main(int argc, char **argv)
 		}
 	}
 
-	global_feature(accel_y, gyro_y, time, S_i, n_S, ofile_maxmin_name, ofile_feature_name);
-
+	//global_feature(accel_y, gyro_y, time, S_i, n_S, ofile_feature_name);
+	walk_feature(accel_x, time, S_i, n_S, ofile_feature_name);
 	//
 
 

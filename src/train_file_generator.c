@@ -30,21 +30,15 @@ int main(int argc, char **argv) {
 	int inputNeuronNum;
 	int outputNeuronNum;
 
-	double *max_accel_y_seg0, *min_accel_y_seg0;
-	double *max_accel_y_seg1, *min_accel_y_seg1;
-	double *max_accel_y_seg2, *min_accel_y_seg2;
-	double *max_accel_y_seg3, *min_accel_y_seg3;
-
-	double *max_gyro_y_seg0, *min_gyro_y_seg0;
-	double *max_gyro_y_seg1, *min_gyro_y_seg1;
-	double *max_gyro_y_seg2, *min_gyro_y_seg2;
-	double *max_gyro_y_seg3, *min_gyro_y_seg3;
-	double *abs_mean;
+	double *max_accel_x_seg0, *min_accel_x_seg0, *rms_accel_x_seg0;
+	double *max_accel_x_seg1, *min_accel_x_seg1, *rms_accel_x_seg1;
+	double *max_accel_x_seg2, *min_accel_x_seg2, *rms_accel_x_seg2;
+	double *max_accel_x_seg3, *min_accel_x_seg3, *rms_accel_x_seg3;
 	double *period;
 	int *pattern;
 
 	//Initialization
-	if(argc != 8) {
+	if(argc != 7) {
 		fprintf(stderr, "Usage: %s <turn feature file> <walk feature file> <stairs feature file> <run feature file> <output train file> <input neuron num> <output neuron num>\n",
 				argv[0]);
 		exit(EXIT_FAILURE);
@@ -73,35 +67,22 @@ int main(int argc, char **argv) {
 		fclose(fp);
 		fprintf(stdout, "Close %s...\n", argv[j]);
 	}
-	max_accel_y_seg0 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	min_accel_y_seg0 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	
-	max_accel_y_seg1 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	min_accel_y_seg1 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	
-	max_accel_y_seg2 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	min_accel_y_seg2 = (double*) malloc(sizeof(double) * N_SAMPLES);
-			
-	max_accel_y_seg3 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	min_accel_y_seg3 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	max_accel_x_seg0 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	min_accel_x_seg0 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	rms_accel_x_seg0 = (double*) malloc(sizeof(double) * N_SAMPLES);
 
-	max_gyro_y_seg0 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	min_gyro_y_seg0 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	
-	
-	max_gyro_y_seg1 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	min_gyro_y_seg1 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	max_accel_x_seg1 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	min_accel_x_seg1 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	rms_accel_x_seg1 = (double*) malloc(sizeof(double) * N_SAMPLES);
 
-	
-	max_gyro_y_seg2 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	min_gyro_y_seg2 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	max_accel_x_seg2 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	min_accel_x_seg2 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	rms_accel_x_seg2 = (double*) malloc(sizeof(double) * N_SAMPLES);
 
-	
-	max_gyro_y_seg3 = (double*) malloc(sizeof(double) * N_SAMPLES);
-	min_gyro_y_seg3 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	max_accel_x_seg3 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	min_accel_x_seg3 = (double*) malloc(sizeof(double) * N_SAMPLES);
+	rms_accel_x_seg3 = (double*) malloc(sizeof(double) * N_SAMPLES);
 
-	
-	abs_mean = (double*) malloc(sizeof(double) * N_SAMPLES);
 	period = (double*) malloc(sizeof(double) * N_SAMPLES);
 	pattern = (int*) malloc (sizeof(int) * N_SAMPLES);
 
@@ -122,19 +103,14 @@ int main(int argc, char **argv) {
 		while((read = getline(&line, &len, fp)) != -1){
 			pattern[i] = j;
 
-			rv = sscanf(line, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n", 
-				&max_accel_y_seg0[i], &min_accel_y_seg0[i],
-				&max_accel_y_seg1[i], &min_accel_y_seg1[i],
-				&max_accel_y_seg2[i], &min_accel_y_seg2[i],
-				&max_accel_y_seg3[i], &min_accel_y_seg3[i],
-				&max_gyro_y_seg0[i], &min_gyro_y_seg0[i],
-				&max_gyro_y_seg1[i], &min_gyro_y_seg1[i],
-				&max_gyro_y_seg2[i], &min_gyro_y_seg2[i],
-				&max_gyro_y_seg3[i], &min_gyro_y_seg3[i],
-				&abs_mean[i],
+			rv = sscanf(line, "%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n", 
+				&max_accel_x_seg0[i], &min_accel_x_seg0[i], &rms_accel_x_seg0[i],
+				&max_accel_x_seg1[i], &min_accel_x_seg1[i], &rms_accel_x_seg1[i],
+				&max_accel_x_seg2[i], &min_accel_x_seg2[i], &rms_accel_x_seg2[i],
+				&max_accel_x_seg3[i], &min_accel_x_seg3[i], &rms_accel_x_seg3[i],
 				&period[i]);
 			
-			if(rv != 18){
+			if(rv != 13){
 				fprintf(stderr, "%s %d \'%s\'. %s.\n", "Failed to read line", i, line, "Exiting");
 				exit(EXIT_FAILURE);
 			}
@@ -148,29 +124,25 @@ int main(int argc, char **argv) {
 
 	// normailize all numbers
 	fprintf(stdout, "Start to normalize data...\n");
-	normalize(max_accel_y_seg0, N_SAMPLES, 6.0);
-	normalize(min_accel_y_seg0, N_SAMPLES, 6.0);
-	normalize(max_accel_y_seg1, N_SAMPLES, 6.0);
-	normalize(min_accel_y_seg1, N_SAMPLES, 6.0);
-	normalize(max_accel_y_seg2, N_SAMPLES, 6.0);
-	normalize(min_accel_y_seg2, N_SAMPLES, 6.0);
-	normalize(max_accel_y_seg3, N_SAMPLES, 6.0);
-	normalize(min_accel_y_seg3, N_SAMPLES, 6.0);
+	normalize(max_accel_x_seg0, N_SAMPLES, 6.0);
+	normalize(min_accel_x_seg0, N_SAMPLES, 6.0);
+	normalize(rms_accel_x_seg0, N_SAMPLES, 6.0);
+	
+	normalize(max_accel_x_seg1, N_SAMPLES, 6.0);
+	normalize(min_accel_x_seg1, N_SAMPLES, 6.0);
+	normalize(rms_accel_x_seg1, N_SAMPLES, 6.0);
+	
+	normalize(max_accel_x_seg2, N_SAMPLES, 6.0);
+	normalize(min_accel_x_seg2, N_SAMPLES, 6.0);
+	normalize(rms_accel_x_seg2, N_SAMPLES, 6.0);
+	
+	normalize(max_accel_x_seg3, N_SAMPLES, 6.0);
+	normalize(min_accel_x_seg3, N_SAMPLES, 6.0);
+	normalize(rms_accel_x_seg3, N_SAMPLES, 6.0);
+	
+	fprintf(stdout, "Period Nomalization!!!!!!!%lf\n", max(period, N_SAMPLES)*2);
+	normalize(period, N_SAMPLES, max(period, N_SAMPLES)*2);
 
-	normalize(max_gyro_y_seg0, N_SAMPLES, 500.0);
-	normalize(min_gyro_y_seg0, N_SAMPLES, 500.0);
-
-	normalize(max_gyro_y_seg1, N_SAMPLES, 500.0);
-	normalize(min_gyro_y_seg1, N_SAMPLES, 500.0);
-
-	normalize(max_gyro_y_seg2, N_SAMPLES, 500.0);
-	normalize(min_gyro_y_seg2, N_SAMPLES, 500.0);
-
-	normalize(max_gyro_y_seg3, N_SAMPLES, 500.0);
-	normalize(min_gyro_y_seg3, N_SAMPLES, 500.0);
-
-	normalize(abs_mean, N_SAMPLES, max(abs_mean, N_SAMPLES));
-	normalize(period, N_SAMPLES, max(period, N_SAMPLES));
 	// normalization ends
 	fprintf(stdout, "Stop normalizing data...\n");
 
@@ -192,17 +164,13 @@ int main(int argc, char **argv) {
 
 	// Write Normalized  Feature and Pattern
 	for(i = 0; i < N_SAMPLES; i++){
-		
-		fprintf(fp, "%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n", 
-			max_accel_y_seg0[i], min_accel_y_seg0[i],
-			max_accel_y_seg1[i], min_accel_y_seg1[i],
-			max_accel_y_seg2[i], min_accel_y_seg2[i],
-			max_accel_y_seg3[i], min_accel_y_seg3[i],
-			max_gyro_y_seg0[i], min_gyro_y_seg0[i],
-			max_gyro_y_seg1[i], min_gyro_y_seg1[i],
-			max_gyro_y_seg2[i], min_gyro_y_seg2[i],
-			max_gyro_y_seg3[i], min_gyro_y_seg3[i],
-			abs_mean[i], period[i]);
+	
+		fprintf(fp, "%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n", 
+			max_accel_x_seg0[i], min_accel_x_seg0[i], rms_accel_x_seg0[i],
+			max_accel_x_seg1[i], min_accel_x_seg1[i], rms_accel_x_seg1[i],
+			max_accel_x_seg2[i], min_accel_x_seg2[i], rms_accel_x_seg2[i],
+			max_accel_x_seg3[i], min_accel_x_seg3[i], rms_accel_x_seg3[i],
+			period[i]);
 		writePattern(fp, pattern[i], outputNeuronNum);
 	}
 

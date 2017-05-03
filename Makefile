@@ -25,6 +25,9 @@ main: ${SRC}/main.c ${SRC}/stride_detector.c ${SRC}/feature_detector.c ${SRC}/ma
 walk_feature_detector: ${SRC}/walk_feature_detector.c
 	$(CC) $(CFLAGS) -o walk_feature_detector ${SRC}/walk_feature_detector.c -lm
 
+train_file_generator: ${SRC}/train_file_generator.c 
+	$(CC) $(CFLAGS) -o train_file_generator ${SRC}/train_file_generator.c $(LDFLAGS)
+
 clean: 
 	rm -f main test_neural_network train_neural_net imu_data train_file_generator walk_feature_detector
 	rm -f *~

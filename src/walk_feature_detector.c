@@ -6,6 +6,7 @@
 #include <stdlib.h>
 /* for fabsf() */
 #include <math.h>
+#include <math_func.h>
 
 struct Feature{
 	// segmentaion 0
@@ -41,86 +42,6 @@ struct Feature{
 	double seg3_mad;
 };
 
-//Max-min feature
-void find_max_min(double* data, int start_pos, int end_pos, double* max, double* min)
-{
-	int i;
-	*max = data[start_pos];
-	*min = data[start_pos];
-	for(i = start_pos; i < end_pos; i++){
-		if(data[i] > *max)
-			*max = data[i];
-		if(data[i] < *min)
-			*min = data[i];
-	}
-}
-
-//Mean
-void find_mean(double* data, int start_pos, int end_pos, double* mean)
-{
-	int i;
-	int totalPos = end_pos - start_pos;
-	double sum = 0;
-	for(i = start_pos; i < end_pos; i++) {
-		sum = sum + data[i];
-	}
-	*mean = sum / (double)totalPos;
-}
-
-//Variance feature
-void find_variance(double* data, int start_pos, int end_pos, double* var)
-{
-	int i;
-	int totalPos = end_pos - start_pos;
-	double mean, sum = 0;
-	find_mean(data, start_pos, end_pos, &mean);
-	for(i = start_pos; i < end_pos; i++) {
-		sum = sum + pow((data[i] - mean), 2);
-	}
-	*var = sum / (double)totalPos;
-}
-
-//STD
-void  find_std(double* data, int start_pos, int end_pos, double* std)
-{
-	double var;
-	find_variance(data, start_pos, end_pos, &var);
-	*std = sqrt(var);
-}
-
-//RMS
-void find_rms(double* data, int start_pos, int end_pos, double* rms)
-{
-	int i;
-	int totalPos = end_pos - start_pos;
-	double sum = 0;
-	for(i = start_pos; i < end_pos; i++) {
-		sum = sum + pow(data[i], 2);
-	}
-	*rms = pow((sum / (double)totalPos), 0.5);
-}
-
-//MAD
-void find_mad(double* data, int start_pos, int end_pos, double* mad)
-{
-	int i;
-	int totalPos = end_pos - start_pos;
-	double mean, sum = 0;
-	find_mean(data, start_pos, end_pos, &mean);
-	for (i = start_pos; i < end_pos; i++) {
-		sum = sum + fabs(data[i] - mean);
-	}
-	*mad = sum / (double)totalPos;
-}
-
-//Max-min ratio
-
-//Skewness?????Not a good one????
-//Kurtosis?????Consider for later
-//Correlation??????????
-
-// Divide the stride into 4 segmentations
-// Extract max min on each segmentation
 struct Feature* extract_feature(double* data, double* time, int* S_i, int n_S)
 {
 	int i;
