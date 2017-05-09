@@ -36,7 +36,7 @@ int exe_walk_neural_network(const WalkFeature *walk_feature);
 int exe_stair_neural_network(const StairFeature *stair_feature);
 int exe_turn_neural_network(const TurnFeature *turn_feature);
 //int exe_jump_neural_network(char *jump_feature_file);
-//int exe_run_neural_network(char *run_feature_file);
+int exe_run_neural_network(const RunFeature *run_feature);
 
 
 #endif

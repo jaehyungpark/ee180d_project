@@ -105,3 +105,40 @@ void extract_stair_feature(StairFeature *feature, int *pos, double *accel_x, dou
 	max(accel_y, pos[3], pos[4], &(feature->accel_y_seg3_max));
 	min(accel_y, pos[3], pos[4], &(feature->accel_y_seg3_min));
 }
+
+void extract_run_feature(RunFeature *feature, int *pos, double* accel_x, double *gyro_z, double *time)
+{
+    // Extract features
+    max(accel_x, pos[0], pos[1], &(feature->accel_x_seg0_max));
+    min(accel_x, pos[0], pos[1], &(feature->accel_x_seg0_min));
+	rms(accel_x, pos[0], pos[1], &(feature->accel_x_seg0_rms));
+
+    max(accel_x, pos[1], pos[2], &(feature->accel_x_seg1_max));
+    min(accel_x, pos[1], pos[2], &(feature->accel_x_seg1_min));
+	rms(accel_x, pos[1], pos[2], &(feature->accel_x_seg1_rms));
+
+    max(accel_x, pos[2], pos[3], &(feature->accel_x_seg2_max));
+    min(accel_x, pos[2], pos[3], &(feature->accel_x_seg2_min));
+	rms(accel_x, pos[2], pos[3], &(feature->accel_x_seg2_rms));
+
+    max(accel_x, pos[3], pos[4], &(feature->accel_x_seg3_max));
+    min(accel_x, pos[3], pos[4], &(feature->accel_x_seg3_min));
+	rms(accel_x, pos[3], pos[4], &(feature->accel_x_seg3_rms));
+    
+	max(gyro_z, pos[0], pos[1], &(feature->gyro_z_seg0_max));
+    min(gyro_z, pos[0], pos[1], &(feature->gyro_z_seg0_min));
+	rms(gyro_z, pos[0], pos[1], &(feature->gyro_z_seg0_rms));
+
+    max(gyro_z, pos[1], pos[2], &(feature->gyro_z_seg1_max));
+    min(gyro_z, pos[1], pos[2], &(feature->gyro_z_seg1_min));
+	rms(gyro_z, pos[1], pos[2], &(feature->gyro_z_seg1_rms));
+
+    max(gyro_z, pos[2], pos[3], &(feature->gyro_z_seg2_max));
+    min(gyro_z, pos[2], pos[3], &(feature->gyro_z_seg2_min));
+	rms(gyro_z, pos[2], pos[3], &(feature->gyro_z_seg2_rms));
+
+    max(gyro_z, pos[3], pos[4], &(feature->gyro_z_seg3_max));
+    min(gyro_z, pos[3], pos[4], &(feature->gyro_z_seg3_min));
+	rms(gyro_z, pos[3], pos[4], &(feature->gyro_z_seg3_rms));
+	feature->period = time[pos[4]] - time[pos[0]];
+}

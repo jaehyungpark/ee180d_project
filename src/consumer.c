@@ -159,6 +159,7 @@ int process_file(const char *fname, float pk_threshold) {
 	TurnFeature* turn_feature = (TurnFeature*) malloc(sizeof(TurnFeature) * n_S-1);
 	WalkFeature* walk_feature = (WalkFeature*) malloc(sizeof(WalkFeature) * n_S-1);
 	StairFeature* stair_feature = (StairFeature*) malloc(sizeof(StairFeature) * n_S-1);
+	RunFeature* run_feature = (RunFeature*) malloc(sizeof(RunFeature) * n_S-1);
 
 	int pos[5];
 	for(i = 0; i< n_S-1; i++){
@@ -169,6 +170,7 @@ int process_file(const char *fname, float pk_threshold) {
 		extract_turn_feature(&turn_feature[i], pos, gyro_y, time);
 		extract_walk_feature(&walk_feature[i], pos, accel_x, time);
 		extract_stair_feature(&stair_feature[i], pos, accel_x, accel_y, time);
+		extract_run_feature(&run_feature[i], pos, accel_x, gyro_z, time);
 	}
 
 	// Construct and initialize neuralnetworks	
@@ -179,6 +181,7 @@ int process_file(const char *fname, float pk_threshold) {
 	int turn_direction;
 	int walk_speed;
 	int stair_direction;
+	int run_speed;
 
 	for(i = 0; i < n_S - 1; i++){
 		motion_type = exe_global_neural_network(&global_feature[i]);
@@ -231,7 +234,20 @@ int process_file(const char *fname, float pk_threshold) {
 			
 			
 			case RUN:
-			printf("Got Input values -> Movement type is Running\n");
+			run_speed = exe_run_neural_network(&run_feature[i]);
+			switch(run_speed){
+				case SLOW_RUN:
+				printf("Got Input values -> Movement type is Slow Running\n");
+				break;
+
+				case MED_RUN:
+				printf("Got Input values -> Movement type is Medium Running\n");
+				break;
+
+				case FAST_RUN:
+				printf("Got Input values -> Movement type is Fast Running\n");
+				break;
+			}
 			break;
 		}
 
